@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Shreya Ojha — Professional Portfolio</title>
+<style>
+  /* Reset & base */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root{
+    --bg:#0d0d0d;
+    --card:#111;
+    --muted:#bfc9d3;
+    --accent:#ff2323;
+    --accent-strong:#ff4a4a;
+    --glass: rgba(255,255,255,0.03);
+  }
+  body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg);
+    color: #e7eef6;
+    line-height: 1.6;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+  }
+  a { color: var(--accent); text-decoration: none; transition: color .2s ease; }
+  a:hover { color: var(--accent-strong); }
+
+  /* Container */
+  .container { max-width: 1100px; padding: 2rem 1rem; margin: auto; }
+
+  /* Neon text */
+  .neon-text {
+    color: var(--accent);
+    text-shadow:
+      0 0 3px #ff2323aa,
+      0 0 7px #ff2323bb,
+      0 0 15px #ff2323cc;
+  }
+
+  /* Navbar */
+  nav {
+    background: rgba(17,17,17,0.9);
+    padding: 0.9rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 120;
+    box-shadow: 0 0 15px #0008;
+    border-bottom: 1px solid rgba(255,255,255,0.02);
+  }
+  nav ul { list-style: none; display:flex; justify-content:center; gap:1.25rem; align-items:center; flex-wrap:wrap; }
+  nav li { font-weight:600; }
+  nav a { font-size:1rem; color:var(--muted); padding:6px 10px; border-radius:6px; display:inline-block; }
+  nav a:hover{ color:#fff; background:var(--glass); }
+
+  #themeToggle {
+    cursor:pointer; border:2px solid var(--accent); padding:6px 10px; border-radius:6px;
+    background:transparent; color:var(--accent); font-weight:700;
+  }
+  #themeToggle:hover { background:var(--accent); color:#111; }
+
+  /* Hero */
+  #hero { text-align:center; padding:3.2rem 0 2rem; }
+  #hero .title { font-size:1.8rem; margin-bottom:0.4rem; font-weight:900; }
+  #hero .subtitle { color:var(--muted); font-size:1.05rem; margin-bottom:1rem; max-width:740px; margin-left:auto; margin-right:auto; }
+
+  /* Layout */
+  .grid-2 { display:grid; grid-template-columns: 1fr 340px; gap:1.5rem; align-items:start; }
+  @media(max-width:900px){ .grid-2 { grid-template-columns: 1fr; } }
+
+  /* Photo card */
+  .photo-card { background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+    padding:1.2rem; border-radius:12px; text-align:center; border:1px solid rgba(255,255,255,0.03);
+  }
+  .photo-card img{ max-width:220px; width:100%; border-radius:12px; border:3px solid var(--accent); box-shadow:0 6px 20px rgba(0,0,0,0.6); }
+  .meta-list { margin-top:12px; text-align:left; font-size:0.95rem; color:var(--muted); }
+
+  /* Main card sections */
+  .card { background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005)); padding:1.2rem; border-radius:12px; border:1px solid rgba(255,255,255,0.03); box-shadow:0 6px 18px rgba(2,6,23,0.6); }
+
+  /* Projects grid */
+  .project-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1rem; margin-top:0.8rem; }
+  .project-card { padding:1rem; border-radius:10px; background:rgba(255,255,255,0.01); transition:transform .25s ease; cursor:pointer; border:1px solid rgba(255,255,255,0.02); }
+  .project-card:hover{ transform:translateY(-6px); box-shadow:0 10px 30px rgba(0,0,0,0.6); }
+
+  /* Education table */
+  table { width:100%; border-collapse:collapse; margin-top:0.6rem; font-size:0.95rem; color:var(--muted); }
+  th, td { padding:10px 8px; border-bottom:1px solid rgba(255,255,255,0.03); text-align:left; }
+  th { color:#fff; background:rgba(255,255,255,0.02); font-weight:700; }
+
+  /* Skills list */
+  .skills { display:flex; flex-wrap:wrap; gap:8px; margin-top:0.6rem; }
+  .skill { background:rgba(255,255,255,0.02); padding:8px 10px; border-radius:8px; color:var(--muted); font-weight:700; border:1px solid rgba(255,255,255,0.02); }
+
+  /* Stats */
+  .stats { display:flex; gap:1rem; margin-top:0.8rem; flex-wrap:wrap; }
+  .stat { background:rgba(255,255,255,0.02); padding:12px 14px; border-radius:10px; min-width:120px; text-align:center; }
+  .stat h3 { color:var(--accent); font-size:1.6rem; margin-bottom:4px; }
+
+  /* Testimonials */
+  blockquote { background:rgba(255,255,255,0.02); padding:1rem 1.2rem; border-left:4px solid var(--accent); margin-bottom:1rem; border-radius:8px; color:var(--muted); }
+  cite { display:block; text-align:right; margin-top:8px; font-weight:700; color:var(--accent-strong); }
+
+  /* Contact form */
+  form { display:flex; flex-direction:column; gap:10px; }
+  label { font-weight:700; color:var(--muted); font-size:0.95rem; }
+  input, textarea { padding:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.03); background:#0b0b0b; color:#fff; }
+  input:focus, textarea:focus { outline: none; border-color:var(--accent); box-shadow:0 0 12px rgba(255,35,35,0.08); }
+
+  .btn { background:var(--accent); color:#111; padding:10px 12px; border-radius:8px; border:none; font-weight:800; cursor:pointer; }
+  .btn:hover { background:var(--accent-strong); }
+
+  /* Footer */
+  footer { text-align:center; color:var(--muted); padding:2rem 0; margin-top:1.5rem; border-top:1px solid rgba(255,255,255,0.02); }
+
+  @media(max-width:600px){
+    nav ul{ gap:0.6rem; padding:0 8px; justify-content:space-between; }
+    .container{ padding:1rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav aria-label="Primary">
+  <ul class="container" role="menubar">
+    <li role="none"><a role="menuitem" href="#hero">Home</a></li>
+    <li role="none"><a role="menuitem" href="#about">About</a></li>
+    <li role="none"><a role="menuitem" href="#education">Education</a></li>
+    <li role="none"><a role="menuitem" href="#skills">Skills</a></li>
+    <li role="none"><a role="menuitem" href="#projects">Projects</a></li>
+    <li role="none"><a role="menuitem" href="#contact">Contact</a></li>
+    <li role="none"><button id="themeToggle" aria-label="Toggle Dark/Light Theme">Toggle Theme</button></li>
+  </ul>
+</nav>
+
+<section id="hero" class="container" aria-labelledby="hero-heading">
+  <h1 id="hero-heading" class="neon-text title">Shreya Ojha</h1>
+  <p class="subtitle">B.Tech (CSE) | 2nd Year — AKTU, Lucknow · Aspiring Software Developer · Enthusiastic learner of C, C++, and Web basics</p>
+
+  <div class="grid-2" style="margin-top:1.25rem;">
+    <div>
+      <div class="card">
+        <h2 class="neon-text">Professional Summary</h2>
+        <p style="color:var(--muted); margin-top:8px;">
+          A motivated first-year Computer Science student at AKTU with a strong academic record and foundational skills in programming (C, C++), HTML, and MS Word.
+          Seeking opportunities to learn, contribute, and grow in software development.
+        </p>
+
+        <div style="margin-top:12px;">
+          <h3 style="margin-bottom:8px;">Quick Info</h3>
+          <ul style="color:var(--muted); list-style:disc; margin-left:18px;">
+            <li>Location: Captain Ganj, Kushinagar</li>
+            <li>Phone: <a href="tel:8303243956">8303243956</a></li>
+            <li>Email: <a href="mailto:shreyaojha4306@gmail.com">shreyaojha4306@gmail.com</a></li>
+            <li>Status: Fresher · Open to internships</li>
+          </ul>
+        </div>
+
+        <div style="margin-top:12px;">
+          <a class="btn" href="/mnt/data/RESUME (4).pdf" download="Shreya_Ojha_Resume.pdf" aria-label="Download Shreya resume">Download Resume (PDF)</a>
+        </div>
+      </div>
+
+      <!-- Education -->
+      <div class="card" style="margin-top:1rem;" id="education">
+        <h2 class="neon-text">Education</h2>
+        <table aria-label="Education qualifications">
+          <thead>
+            <tr><th>Qualification</th><th>Year</th><th>Board / University</th><th>Percentage</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>10th</td><td>2021</td><td>UP Board</td><td>87.33%</td></tr>
+            <tr><td>12th</td><td>2023</td><td>UP Board</td><td>65%</td></tr>
+            <tr><td>B.Tech (CSE) — 1st Year</td><td>2024–2025</td><td>AKTU, Lucknow</td><td>77.33%</td></tr>
+          </tbody>
+        </table>
+
+        <div style="margin-top:10px; color:var(--muted); font-size:0.95rem;">
+          <strong>Career Objective:</strong>
+          <p style="margin-top:6px; color:var(--muted);">
+            A challenging career which offers opportunity to apply my skills and knowledge with continuous learning and growth.
+          </p>
+        </div>
+      </div>
+
+      <!-- Projects -->
+      <div class="card" style="margin-top:1rem;" id="projects">
+        <h2 class="neon-text">Academic Projects & Practice</h2>
+        <div class="project-grid">
+          <div class="project-card" tabindex="0" aria-label="Project: C language practice">
+            <h3>C Language Practice</h3>
+            <p>Collection of solved exercises: arrays, loops, functions and basic algorithms implemented in C.</p>
+          </div>
+          <div class="project-card" tabindex="0" aria-label="Project: HTML mini website">
+            <h3>HTML Mini Website</h3>
+            <p>Small portfolio and practice pages built with HTML and CSS to learn structure and styling.</p>
+          </div>
+          <div class="project-card" tabindex="0" aria-label="Project: Typing & Word docs">
+            <h3>MS Word & Documentation</h3>
+            <p>Document preparation and formatting practice using MS Word—resumes, project reports and templates.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right column: Photo + Personal -->
+    <aside>
+      <div class="photo-card card" id="photo-section">
+        <h2 class="neon-text">Photo</h2>
+        <img src="WhatsApp Image 2025-11-19 at 9.04.33 PM.jpeg" alt="Professional portrait of Shreya Ojha" />
+        <div class="meta-list" style="margin-top:12px;">
+          <p><strong>Father's Name:</strong> Mr. Rameshwar Ojha</p>
+          <p><strong>D.O.B:</strong> 07/05/2005</p>
+          <p><strong>Marital Status:</strong> Unmarried</p>
+          <p><strong>Gender:</strong> Female</p>
+          <p><strong>Religion:</strong> Hindu</p>
+          <p><strong>Nationality:</strong> Indian</p>
+          <p><strong>Languages:</strong> Hindi, English</p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:1rem;" id="skills">
+        <h2 class="neon-text">Skills</h2>
+        <div class="skills" aria-label="Technical skills">
+          <div class="skill">C</div>
+          <div class="skill">C++</div>
+          <div class="skill">HTML</div>
+          <div class="skill">MS Word</div>
+          <div class="skill">Problem Solving</div>
+        </div>
+
+        <div style="margin-top:12px;">
+          <h3 style="margin-bottom:8px;">Personal Strengths</h3>
+          <ul style="color:var(--muted); margin-left:18px;">
+            <li>Quick learner</li>
+            <li>Disciplined & Punctual</li>
+            <li>Team player</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:1rem;">
+        <h2 class="neon-text">Stats</h2>
+        <div class="stats">
+          <div class="stat"><h3>87.33%</h3><div style="color:var(--muted);">10th Board</div></div>
+          <div class="stat"><h3>65%</h3><div style="color:var(--muted);">12th Board</div></div>
+          <div class="stat"><h3>1st Yr</h3><div style="color:var(--muted);">AKTU CSE</div></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section id="testimonials" class="container" aria-label="Testimonials" style="margin-top:1rem;">
+  <div class="card">
+    <h2 class="neon-text">Testimonials</h2>
+    <blockquote tabindex="0">
+      "Shreya is a dedicated student with excellent learning ability and strong academic performance." 
+      <cite>- School Mentor / Teacher</cite>
+    </blockquote>
+  </div>
+</section>
+
+<section id="contact" class="container" aria-label="Contact" style="margin-top:1rem;">
+  <div class="card">
+    <h2 class="neon-text">Contact</h2>
+    <p style="color:var(--muted); margin-bottom:10px;">Feel free to reach out for internships, guidance or collaboration.</p>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+      <div>
+        <label>Phone</label>
+        <input type="text" value="+91 8303243956" readonly />
+      </div>
+      <div>
+        <label>Email</label>
+        <input type="text" value="shreyaojha4306@gmail.com" readonly />
+      </div>
+    </div>
+
+    <div style="margin-top:12px;">
+      <form id="contactForm" aria-label="Contact form">
+        <label for="name">Your name</label>
+        <input id="cf-name" type="text" placeholder="Your name" required>
+
+        <label for="email">Your email</label>
+        <input id="cf-email" type="email" placeholder="Your email" required>
+
+        <label for="message">Message</label>
+        <textarea id="cf-message" rows="4" placeholder="Write your message" required></textarea>
+
+        <button class="btn" type="submit">Send Message</button>
+      </form>
+    </div>
+
+    <div style="margin-top:14px; color:var(--muted);">
+      <strong>Download Resume:</strong>
+      <div><a href="/mnt/data/RESUME (4).pdf" download="Shreya_Ojha_Resume.pdf">Click here to download the original resume (PDF)</a></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>© <strong>Shreya Ojha</strong> · Based in Kushinagar · <a href="mailto:shreyaojha4306@gmail.com">shreyaojha4306@gmail.com</a></p>
+  </div>
+</footer>
+
+<script>
+  // Theme toggle (keeps simple inline style toggle)
+  const themeToggleBtn = document.getElementById('themeToggle');
+  themeToggleBtn.addEventListener('click', () => {
+    if(document.body.style.backgroundColor === 'white'){
+      // switch to dark
+      document.body.style.background = '';
+      document.body.style.color = '';
+      themeToggleBtn.style.background = 'transparent';
+      themeToggleBtn.style.color = '';
+    } else {
+      // light theme
+      document.body.style.background = 'white';
+      document.body.style.color = '#222';
+      themeToggleBtn.style.background = '#ff2323';
+      themeToggleBtn.style.color = '#111';
+    }
+  });
+
+  // Contact form - open mailto with filled values (demo)
+  const contactForm = document.getElementById('contactForm');
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('cf-name').value.trim();
+    const email = document.getElementById('cf-email').value.trim();
+    const message = document.getElementById('cf-message').value.trim();
+
+    if(!name || !email || !message){
+      alert('Please fill all fields.');
+      return;
+    }
+
+    const subject = encodeURIComponent('Portfolio message from ' + name);
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
+    // open default mail client
+    window.location.href = `mailto:shreyaojha4306@gmail.com?subject=${subject}&body=${body}`;
+  });
+
+  // Small accessibility: focus visible on keyboard navigation
+  document.addEventListener('keyup', (e) => {
+    if(e.key === 'Tab') document.body.classList.add('show-focus');
+  });
+
+  // Simple "fun" interactive element (optional)
+  // If user clicks anywhere on project cards, small sparkle text
+  document.querySelectorAll('.project-card').forEach(pc => {
+    pc.addEventListener('click', () => {
+      pc.style.transform = 'scale(1.02)';
+      setTimeout(()=> pc.style.transform = '', 200);
+    });
+  });
+</script>
+
+</body>
+</html>
